@@ -25,11 +25,11 @@ Obj = function(game, x, y, isRout){
 Obj.prototype = Object.create(Phaser.Sprite.prototype);
 Obj.prototype.constructor = Obj;
 
-Obj.prototype.update = function(){
-
+function scaleObj(obj){
+  obj.x/=BIGDIST;
+  obj.y/=BIGDIST;
 }
-
-Obj.prototype.scale = function(){
-  this.x/=BIGDIST;
-  this.y/=BIGDIST;
+function moveObj(obj){
+  obj.x+=MOVEX;
+  obj.y+=MOVEY;
 }

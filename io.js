@@ -11,10 +11,8 @@ order of code:
     - get the x,y cords of the device
     - make a cords object (see setThing() function header)
     - call setThing()
-  - call thingsSet() (not seen in this file. it takes no parameters)
   - repeat whenever new data recieved
 */
-
 
 
 /*
@@ -31,9 +29,12 @@ function setRouters(rout0,rout1,rout2){
 
   setCenter(rout0,rout1,rout2);
   setBigDist(rout0,rout1,rout2);
+  scaleCenter();
 
-  ROUT0.scale();ROUT1.scale();ROUT2.scale();
+  scaleObj(ROUT0);scaleObj(ROUT1);scaleObj(ROUT2);
 
+  setMove();
+  moveObj(ROUT0);moveObj(ROUT1);moveObj(ROUT2);
 
 }
 
@@ -53,6 +54,8 @@ function setThing(mac, cords){
   else{
     MAP[mac] = new Obj(GAME,cords.xPos,cords.yPos,false);
   }
+  scaleObj(MAP[mac]);
+  moveObj(MAP[mac]);
 }
 
 /*
@@ -69,4 +72,15 @@ function setBigDist(rout0,rout1,rout2){
   var dist1 = distance(rout1.xPos,rout1.yPos,CENTERX,CENTERY);
   var dist2 = distance(rout2.xPos,rout2.yPos,CENTERX,CENTERY);
   BIGDIST = Math.max(dist0,dist1,dist2)/SCALE;
+}
+function scaleCenter(){
+  CENTERX/=BIGDIST;
+  CENTERY/=BIGDIST;
+}
+function setMove(){
+  MOVEX = SCREENWIDTH - CENTERX;
+  MOVEY = SCREENHEIGHT - CENTERY;
+}
+function distance(x1,y1,x2,y2){
+  return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
 }

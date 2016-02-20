@@ -3,23 +3,15 @@ var SCREENHEIGHT = 600; //canvas pixel height
 var GAME = new Phaser.Game(SCREENWIDTH, SCREENHEIGHT, Phaser.AUTO, '',
                 { preload: preload, create: create, update: update});
 
+var test = 0;
+
 var ROUT0,ROUT1,ROUT2;
 var ROUTS = [];
 
-//a map: key=mac address, data=x,y cords
 var MAP = {};
 
-var CENTERX,CENTERY,BIGDIST;
+var CENTERX,CENTERY,BIGDIST,MOVEX,MOVEY;
 var SCALE = 100;
-
-var ROUT0X = 10;
-var ROUT0Y = 19;
-var ROUT1X = 146;
-var ROUT1Y = -21;
-var ROUT2X = 90;
-var ROUT2Y = 100;
-var THINGSX = []; THINGSX.push(-100); THINGSX.push(250); THINGSX.push(30); THINGSX.push(650);
-var THINGSY = []; THINGSY.push(350); THINGSY.push(275); THINGSY.push(-160); THINGSY.push(375);
 
 var MOUSEDOWNX = undefined;
 var MOUSEDOWNY = undefined;
@@ -60,19 +52,49 @@ function create(){
     GRAPHICS.endFill();
   }
 
-/*
-  resizeObjs(ROUT0X,ROUT0Y,ROUT1X,ROUT1Y,ROUT2X,ROUT2Y,THINGSX,THINGSY);
 
-  var rout0 = new Obj(GAME,ROUT0X,ROUT0Y,true);
-  var rout1 = new Obj(GAME,ROUT1X,ROUT1Y,true);
-  var rout2 = new Obj(GAME,ROUT2X,ROUT2Y,true);
-  for(var a = 0; a < THINGSX.length; a++){
-    var thing = new Obj(GAME,THINGSX[a],THINGSY[a],false);
-  }
-*/
+  var rout0 = {
+    xPos: 230,
+    yPos: 143
+  };
+  var rout1 = {
+    xPos: 23,
+    yPos: -43
+  };
+  var rout2 = {
+    xPos: -310,
+    yPos: 200
+  };
+
+  setRouters(rout0,rout1,rout2);
+
+  var thing0 = {
+    xPos: 20,
+    yPos: 530
+  };
+  var thing1 = {
+    xPos: 430,
+    yPos: -200
+  };
+  var thing2 = {
+    xPos: -10,
+    yPos: 1
+  };
+
+  setThing('a',thing0);
+  setThing('b',thing1);
+  setThing('c',thing2);
 
 }
 function update(){
+  test+=1;
+
+  var thing0 = {
+    xPos: test,
+    yPos:test
+  };
+  setThing('a',thing0);
+
   if(GAME.input.activePointer.isDown){
     if(typeof MOUSEDOWNX === 'undefined'){
       MOUSEDOWNX = GAME.input.mousePointer.x;
@@ -92,6 +114,7 @@ function update(){
 
 }
 
+/*
 function thingsSet(){
   for(var mac in MAP) {
     if (MAP.hasOwnProperty(mac)) {
@@ -99,54 +122,4 @@ function thingsSet(){
     }
   }
 }
-
-//thingsx, thingsy are arrays of things
-function resizeObjs(rout0x,rout0y,rout1x,rout1y,rout2x,rout2y,thingsx,thingsy){
-
-  var centerX = (rout0x+rout1x+rout2x)/3;
-  var centerY = (rout0y+rout1y+rout2y)/3;
-
-  var dist0 = distance(rout0x,rout0y,centerX,centerY);
-  var dist1 = distance(rout1x,rout1y,centerX,centerY);
-  var dist2 = distance(rout2x,rout2y,centerX,centerY);
-  var bigDist = Math.max(dist0,dist1,dist2)/100;
-
-  rout0x/=bigDist; rout1x/=bigDist; rout2x/=bigDist;
-  rout0y/=bigDist; rout1y/=bigDist; rout2y/=bigDist;
-
-  for(var a = 0; a < thingsx.length; a++){
-    thingsx[a]/=bigDist;
-    thingsy[a]/=bigDist;
-  }
-
-  centerX/=bigDist;
-  centerY/=bigDist;
-
-  var moveX = SCREENWIDTH - centerX;  //set thing at center, move all that translation
-  var moveY = SCREENHEIGHT - centerY; //same
-
-  rout0x+=moveX; rout1x+=moveX; rout2x+=moveX;
-  rout0y+=moveY; rout1y+=moveY; rout2y+=moveY;
-
-  for(var a = 0; a < thingsx.length; a++){
-    thingsx[a]+=moveX;
-    thingsy[a]+=moveY;
-  }
-
-  ROUT0X = rout0x;
-  ROUT0Y = rout0y;
-  ROUT1X = rout1x;
-  ROUT1Y = rout1y;
-  ROUT2X = rout2x;
-  ROUT2Y = rout2y;
-
-  for(var a = 0; a < thingsx.length; a++){
-    THINGSX[a] = thingsx[a];
-    THINGSY[a] = thingsy[a];
-  }
-
-}
-
-function distance(x1,y1,x2,y2){
-  return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
-}
+*/
