@@ -28,3 +28,8 @@ Obj.prototype.constructor = Obj;
 Obj.prototype.update = function(){
 
 }
+
+Obj.prototype.scale = function(){
+  this.x/=BIGDIST;
+  this.y/=BIGDIST;
+}

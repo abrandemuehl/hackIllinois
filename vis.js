@@ -3,6 +3,15 @@ var SCREENHEIGHT = 600; //canvas pixel height
 var GAME = new Phaser.Game(SCREENWIDTH, SCREENHEIGHT, Phaser.AUTO, '',
                 { preload: preload, create: create, update: update});
 
+var ROUT0,ROUT1,ROUT2;
+var ROUTS = [];
+
+//a map: key=mac address, data=x,y cords
+var MAP = {};
+
+var CENTERX,CENTERY,BIGDIST;
+var SCALE = 100;
+
 var ROUT0X = 10;
 var ROUT0Y = 19;
 var ROUT1X = 146;
@@ -21,7 +30,6 @@ var GRAPHICS;
 
 function preload(){
   GAME.scale.pageAlignHorizontally = true;
-  GAME.scale.pageAlignVertically = true;
   GAME.scale.refresh();
 
   GAME.load.image('ROUTER','router.png');
@@ -52,7 +60,7 @@ function create(){
     GRAPHICS.endFill();
   }
 
-
+/*
   resizeObjs(ROUT0X,ROUT0Y,ROUT1X,ROUT1Y,ROUT2X,ROUT2Y,THINGSX,THINGSY);
 
   var rout0 = new Obj(GAME,ROUT0X,ROUT0Y,true);
@@ -61,7 +69,7 @@ function create(){
   for(var a = 0; a < THINGSX.length; a++){
     var thing = new Obj(GAME,THINGSX[a],THINGSY[a],false);
   }
-
+*/
 
 }
 function update(){
@@ -82,6 +90,14 @@ function update(){
     }
   }
 
+}
+
+function thingsSet(){
+  for(var mac in MAP) {
+    if (MAP.hasOwnProperty(mac)) {
+      MAP[mac]
+    }
+  }
 }
 
 //thingsx, thingsy are arrays of things
