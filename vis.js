@@ -3,15 +3,21 @@ var SCREENHEIGHT = 600; //canvas pixel height
 var GAME = new Phaser.Game(SCREENWIDTH, SCREENHEIGHT, Phaser.AUTO, '',
                 { preload: preload, create: create, update: update});
 
-var ROUT0X = 23;
-var ROUT0Y = 88;
-var ROUT1X = 105;
-var ROUT1Y = 406;
-var ROUT2X = 341;
-var ROUT2Y = 230;
-var THINGSX = []; THINGSX.push(300); THINGSX.push(250);
-var THINGSY = []; THINGSY.push(350); THINGSY.push(275);
+var ROUT0X = 0;
+var ROUT0Y = 0;
+var ROUT1X = 100;
+var ROUT1Y = 0;
+var ROUT2X = 50;
+var ROUT2Y = 100;
+var THINGSX = []; THINGSX.push(300); THINGSX.push(250); THINGSX.push(30); THINGSX.push(650);
+var THINGSY = []; THINGSY.push(350); THINGSY.push(275); THINGSY.push(160); THINGSY.push(375);
 
+var MOUSEDOWNX = undefined;
+var MOUSEDOWNY = undefined;
+var CLICKCAMERAX;
+var CLICKCAMERAY;
+
+var GRAPHICS;
 
 function preload(){
   GAME.scale.pageAlignHorizontally = true;
@@ -28,6 +34,25 @@ function create(){
   GAME.camera.x = SCREENWIDTH*.5;
   GAME.camera.y = SCREENHEIGHT*.5;
 
+  GRAPHICS = GAME.add.graphics(0,0);
+  for(var a = 0; a < SCREENWIDTH*2; a+=(SCREENWIDTH)){
+    GRAPHICS.beginFill(0xFF3300);
+    GRAPHICS.moveTo(a,0);
+    GRAPHICS.lineTo(a, SCREENHEIGHT*2);
+    GRAPHICS.lineTo(a+1, SCREENHEIGHT*2);
+    GRAPHICS.lineTo(a+1, 0);
+    GRAPHICS.endFill();
+  }
+  for(var a = 0; a < SCREENHEIGHT*2; a+=(SCREENHEIGHT)){
+    GRAPHICS.beginFill(0xFF3300);
+    GRAPHICS.moveTo(0,a);
+    GRAPHICS.lineTo(SCREENWIDTH*2, a);
+    GRAPHICS.lineTo(SCREENWIDTH*2, a+1);
+    GRAPHICS.lineTo(0, a+1);
+    GRAPHICS.endFill();
+  }
+
+
   resizeObjs(ROUT0X,ROUT0Y,ROUT1X,ROUT1Y,ROUT2X,ROUT2Y,THINGSX,THINGSY);
 
   var rout0 = new Obj(GAME,ROUT0X,ROUT0Y,true);
@@ -37,8 +62,26 @@ function create(){
     var thing = new Obj(GAME,THINGSX[a],THINGSY[a],false);
   }
 
+
 }
 function update(){
+  if(GAME.input.activePointer.isDown){
+    if(typeof MOUSEDOWNX === 'undefined'){
+      MOUSEDOWNX = GAME.input.mousePointer.x;
+      MOUSEDOWNY = GAME.input.mousePointer.y;
+      CLICKCAMERAX = GAME.camera.x;
+      CLICKCAMERAY = GAME.camera.y;
+    }
+    GAME.camera.x = CLICKCAMERAX + MOUSEDOWNX - GAME.input.mousePointer.x;
+    GAME.camera.y = CLICKCAMERAY + MOUSEDOWNY - GAME.input.mousePointer.y;
+    console.log(GAME.input.mousePointer.x);
+  }
+  else{
+    if(typeof MOUSEDOWNX !== 'undefined'){
+      MOUSEDOWNX = undefined;
+      MOUSEDOWNY = undefined;
+    }
+  }
 
 }
 
@@ -51,7 +94,7 @@ function resizeObjs(rout0x,rout0y,rout1x,rout1y,rout2x,rout2y,thingsx,thingsy){
   var dist0 = distance(rout0x,rout0y,centerX,centerY);
   var dist1 = distance(rout1x,rout1y,centerX,centerY);
   var dist2 = distance(rout2x,rout2y,centerX,centerY);
-  var bigDist = Math.max(dist0,dist1,dist2)/250;
+  var bigDist = Math.max(dist0,dist1,dist2)/100;
 
   rout0x/=bigDist; rout1x/=bigDist; rout2x/=bigDist;
   rout0y/=bigDist; rout1y/=bigDist; rout2y/=bigDist;
@@ -60,6 +103,9 @@ function resizeObjs(rout0x,rout0y,rout1x,rout1y,rout2x,rout2y,thingsx,thingsy){
     thingsx[a]/=bigDist;
     thingsy[a]/=bigDist;
   }
+
+  centerX/=bigDist;
+  centerY/=bigDist;
 
   var moveX = SCREENWIDTH - centerX;  //set thing at center, move all that translation
   var moveY = SCREENHEIGHT - centerY; //same

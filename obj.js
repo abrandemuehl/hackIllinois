@@ -16,6 +16,8 @@ Obj = function(game, x, y, isRout){
   }
 
   Phaser.Sprite.call(this,game,x,y,key);
+  this.pivot.x = this.width*.5;
+  this.pivot.y = this.height*.5;
   this.scale.setTo(scale,scale);
   game.add.existing(this);
 }
