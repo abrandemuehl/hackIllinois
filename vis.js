@@ -3,14 +3,14 @@ var SCREENHEIGHT = 600; //canvas pixel height
 var GAME = new Phaser.Game(SCREENWIDTH, SCREENHEIGHT, Phaser.AUTO, '',
                 { preload: preload, create: create, update: update});
 
-var ROUT0X = 0;
-var ROUT0Y = 0;
-var ROUT1X = 100;
-var ROUT1Y = 0;
-var ROUT2X = 50;
+var ROUT0X = 10;
+var ROUT0Y = 19;
+var ROUT1X = 146;
+var ROUT1Y = -21;
+var ROUT2X = 90;
 var ROUT2Y = 100;
-var THINGSX = []; THINGSX.push(300); THINGSX.push(250); THINGSX.push(30); THINGSX.push(650);
-var THINGSY = []; THINGSY.push(350); THINGSY.push(275); THINGSY.push(160); THINGSY.push(375);
+var THINGSX = []; THINGSX.push(-100); THINGSX.push(250); THINGSX.push(30); THINGSX.push(650);
+var THINGSY = []; THINGSY.push(350); THINGSY.push(275); THINGSY.push(-160); THINGSY.push(375);
 
 var MOUSEDOWNX = undefined;
 var MOUSEDOWNY = undefined;
@@ -35,16 +35,16 @@ function create(){
   GAME.camera.y = SCREENHEIGHT*.5;
 
   GRAPHICS = GAME.add.graphics(0,0);
-  for(var a = 0; a < SCREENWIDTH*2; a+=(SCREENWIDTH)){
-    GRAPHICS.beginFill(0xFF3300);
+  for(var a = 0; a < SCREENWIDTH*2; a+=(SCREENWIDTH/2)){
+    GRAPHICS.beginFill(0xCCCCCC);
     GRAPHICS.moveTo(a,0);
     GRAPHICS.lineTo(a, SCREENHEIGHT*2);
     GRAPHICS.lineTo(a+1, SCREENHEIGHT*2);
     GRAPHICS.lineTo(a+1, 0);
     GRAPHICS.endFill();
   }
-  for(var a = 0; a < SCREENHEIGHT*2; a+=(SCREENHEIGHT)){
-    GRAPHICS.beginFill(0xFF3300);
+  for(var a = 0; a < SCREENHEIGHT*2; a+=(SCREENHEIGHT/2)){
+    GRAPHICS.beginFill(0xCCCCCC);
     GRAPHICS.moveTo(0,a);
     GRAPHICS.lineTo(SCREENWIDTH*2, a);
     GRAPHICS.lineTo(SCREENWIDTH*2, a+1);
@@ -74,7 +74,6 @@ function update(){
     }
     GAME.camera.x = CLICKCAMERAX + MOUSEDOWNX - GAME.input.mousePointer.x;
     GAME.camera.y = CLICKCAMERAY + MOUSEDOWNY - GAME.input.mousePointer.y;
-    console.log(GAME.input.mousePointer.x);
   }
   else{
     if(typeof MOUSEDOWNX !== 'undefined'){
