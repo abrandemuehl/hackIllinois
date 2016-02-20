@@ -19,6 +19,8 @@ Obj = function(game, x, y, isRout){
   this.pivot.x = this.width*.5;
   this.pivot.y = this.height*.5;
   this.scale.setTo(scale,scale);
+  this.inputEnabled = true;
+  this.events.onInputDown.add(listener, this);
   game.add.existing(this);
 }
 
@@ -32,4 +34,8 @@ function scaleObj(obj){
 function moveObj(obj){
   obj.x+=MOVEX;
   obj.y+=MOVEY;
+}
+
+function listener(obj){
+  CURROBJ = obj;
 }

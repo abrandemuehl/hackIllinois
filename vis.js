@@ -20,6 +20,8 @@ var CLICKCAMERAY;
 
 var GRAPHICS;
 
+var CURROBJ = undefined;
+
 function preload(){
   GAME.scale.pageAlignHorizontally = true;
   GAME.scale.refresh();
@@ -113,14 +115,10 @@ function update(){
     }
   }
 
-}
-
-/*
-function thingsSet(){
-  for(var mac in MAP) {
-    if (MAP.hasOwnProperty(mac)) {
-      MAP[mac]
-    }
+  if(typeof CURROBJ !== 'undefined'){
+    document.getElementById('CURROBJ').innerHTML =
+      'X position:<b> ' + Math.floor(CURROBJ.x - SCREENWIDTH) +
+      '</b> , Y position:<b> ' + Math.floor(CURROBJ.y - SCREENHEIGHT);
   }
+
 }
-*/

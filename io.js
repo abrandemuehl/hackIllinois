@@ -6,7 +6,7 @@ write your web socket here
 order of code:
 - get the x,y positions of the 3 routers
 - make them rout objects (see setRouters() function header)
-- call setRouters() (this should be done only once)
+- call setRouters()
 - the following should be done whenever data is recieved from socket:
   - for each device:
     - get the mac address
