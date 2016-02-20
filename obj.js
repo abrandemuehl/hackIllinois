@@ -12,7 +12,7 @@ Obj = function(game, x, y, isRout){
   }
   else{
     key = 'THING';
-    scale = 1;
+    scale = .02;
   }
 
   Phaser.Sprite.call(this,game,x,y,key);
@@ -22,3 +22,7 @@ Obj = function(game, x, y, isRout){
 
 Obj.prototype = Object.create(Phaser.Sprite.prototype);
 Obj.prototype.constructor = Obj;
+
+Obj.prototype.update = function(){
+
+}
