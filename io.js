@@ -1,3 +1,5 @@
+var DEBUGMODE = true; //turn this off when doing websockets
+
 /*
 write your web socket here
 
@@ -13,6 +15,8 @@ order of code:
     - call setThing()
   - repeat whenever new data recieved
 */
+
+
 
 
 /*

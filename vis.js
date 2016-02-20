@@ -1,5 +1,5 @@
-var SCREENWIDTH = 800;  //canvas pixel width
-var SCREENHEIGHT = 600; //canvas pixel height
+var SCREENWIDTH = 900;  //canvas pixel width
+var SCREENHEIGHT = 700; //canvas pixel height
 var GAME = new Phaser.Game(SCREENWIDTH, SCREENHEIGHT, Phaser.AUTO, '',
                 { preload: preload, create: create, update: update});
 
@@ -11,7 +11,7 @@ var ROUTS = [];
 var MAP = {};
 
 var CENTERX,CENTERY,BIGDIST,MOVEX,MOVEY;
-var SCALE = 100;
+var SCALE = 300;
 
 var MOUSEDOWNX = undefined;
 var MOUSEDOWNY = undefined;
@@ -53,47 +53,48 @@ function create(){
   }
 
 
-  var rout0 = {
-    xPos: 230,
-    yPos: 143
-  };
-  var rout1 = {
-    xPos: 23,
-    yPos: -43
-  };
-  var rout2 = {
-    xPos: -310,
-    yPos: 200
-  };
-
-  setRouters(rout0,rout1,rout2);
-
-  var thing0 = {
-    xPos: 20,
-    yPos: 530
-  };
-  var thing1 = {
-    xPos: 430,
-    yPos: -200
-  };
-  var thing2 = {
-    xPos: -10,
-    yPos: 1
-  };
-
-  setThing('a',thing0);
-  setThing('b',thing1);
-  setThing('c',thing2);
+  if(DEBUGMODE){
+    var rout0 = {
+      xPos: 230,
+      yPos: 143
+    };
+    var rout1 = {
+      xPos: 23,
+      yPos: -43
+    };
+    var rout2 = {
+      xPos: -310,
+      yPos: 200
+    };
+    setRouters(rout0,rout1,rout2);
+    var thing0 = {
+      xPos: 20,
+      yPos: 530
+    };
+    var thing1 = {
+      xPos: 430,
+      yPos: -200
+    };
+    var thing2 = {
+      xPos: -10,
+      yPos: 1
+    };
+    setThing('a',thing0);
+    setThing('b',thing1);
+    setThing('c',thing2);
+  }
 
 }
 function update(){
-  test+=1;
 
-  var thing0 = {
-    xPos: test,
-    yPos:test
-  };
-  setThing('a',thing0);
+  if(DEBUGMODE){
+    test+=1;
+    var thing0 = {
+      xPos: test,
+      yPos:test
+    };
+    setThing('a',thing0);
+  }
 
   if(GAME.input.activePointer.isDown){
     if(typeof MOUSEDOWNX === 'undefined'){
