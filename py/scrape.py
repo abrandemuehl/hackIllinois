@@ -25,6 +25,7 @@ def PacketHandler(pkt):
                 RouterPacket(pkt)
                 if len(ROUTER_DATA)>=2:
                     HANDSHAKE_DONE=True
+                    ROUTERS=[]
         elif pkt.addr2 and pkt.subtype != 8:
             PrintPacket(pkt)
 
