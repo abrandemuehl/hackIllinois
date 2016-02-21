@@ -75,7 +75,7 @@ def handshake():
     payload={'mac':mac}
     r = requests.post(URL_HANDSHAKE,data=payload)
     while(1):
-        time.sleep(0.5)
+        time.sleep(1)
         r = requests.get(URL_HANDSHAKE)
         data=r.json()
         print(data)
