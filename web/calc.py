@@ -9,7 +9,7 @@ router_addresses = {}
 def routerAddress(router_mac_addr) :
 
 	i = 0
-	while (len(router_addresses.keys()) < 4 and(i < 3)) :
+	while (len(router_addresses.keys()) < 4 and (i < 3)) :
 		if (not router_addresses.has_key(router_mac_addr)) :
 			router_addresses[router_mac_addr] = i
 			i += 1
