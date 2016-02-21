@@ -22,7 +22,7 @@ class DataHandler(tornado.web.RequestHandler):
         timestamp = self.get_argument('timestamp')
         signal = self.get_argument('signal_strength')
         router = self.get_argument('router')
-        res = checkForUpdates(mac, timestamp, int(signal), router_mac)
+        res = checkForUpdates(mac, timestamp, int(signal), router)
         if res:
             x, y, mac = res
             for socket in WSHandler.connections:
