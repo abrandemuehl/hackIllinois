@@ -16,8 +16,6 @@ def routerAddress(router_mac_addr) :
 	
 
 def checkForUpdates(mac_addr, timestamp, signal, router_addr):
-
-
 	if (!dict_storage.has_key(mac_addr)):
 		dict_storage[mac_addr] = {timestamp: {0, 0, 0}}	
 		dict_coordinates.append(mac_addr)
