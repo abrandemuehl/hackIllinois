@@ -1,10 +1,10 @@
 import tornado.httpserver
 import tornado.websocket
-import tornado.ioloop
+import tornado.ioloop 
 import tornado.web
 import json
 
-from calc import checkForUpdates, position_routers
+from calc import checkForUpdates, position_routers, router1, router2, router3
 
 
 router_macs = []
@@ -14,6 +14,13 @@ class WSHandler(tornado.websocket.WebSocketHandler):
     connections = set()
     def open(self):
         self.connections.add(self)
+        if router1 and router2 and router3:
+            socket.write_message(json.dumps(
+                {'type': "routers", 
+                'values': [
+                    {'x': router1.x, 'y':router1.y}, 
+                    {'x': router2.x, 'y': router2.y}, 
+                    {'x': router3.x, 'y': router3.y}]}))
 
     def on_close(self):
         self.connections.remove(self)
@@ -28,7 +35,7 @@ class DeviceHandler(tornado.web.RequestHandler):
         if res:
             x, y, mac = res
             for socket in WSHandler.connections:
-                socket.write_message(json.dumps({"x": x, "y": y, "mac": mac}))
+                socket.write_message(json.dumps({"x": x, "y": y, "mac": mac, "type":device}))
 
 class RouterHandler(tornado.web.RequestHandler):
     def post(self):
@@ -43,6 +50,8 @@ class RouterHandler(tornado.web.RequestHandler):
             if len(router_distances) == 6:
                 # sets some global variables in calc
                 position_routers(router_distances)
+                for socket in WSHandler.connections:
+                    socket.write_message(json.dumps({'type': "routers", 'values': [{'x': router1.x, 'y':router1.y}, {'x': router2.x, 'y': router2.y}, {'x': router3.x, 'y': router3.y}]}))
             
 
 class RouterHandshakeHandler(tornado.web.RequestHandler):
@@ -54,8 +63,17 @@ class RouterHandshakeHandler(tornado.web.RequestHandler):
             if not router in router_macs:
                 router_macs.append(router)
     def get(self):
+        self.content_type = 'application/json'
         self.write(json.dumps(router_macs))
 
+
+class ResetHandler(tornado.web.RequestHandler):
+    def get(self):
+        global router_distances
+        global router_macs
+        router_distances = []
+        router_macs = []
+        self.write("Reset!")
 
 
 
@@ -64,7 +82,7 @@ application = tornado.web.Application([
     (r'/data/device', DeviceHandler),
     (r'/data/router', RouterHandler),
     (r'/data/handshake', RouterHandshakeHandler),
-    # (r'/data/reset', ResetHandler)
+    (r'/data/reset', ResetHandler)
 ])
 
 if __name__ == "__main__":
