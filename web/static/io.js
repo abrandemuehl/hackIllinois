@@ -90,7 +90,7 @@ function distance(x1,y1,x2,y2){
 }
 
 
-var ws = new WebSocket('ws://' + window.location.hostname + '/ws');
+var ws = new WebSocket('ws://' + window.location.hostname + '/data/ws');
 
 
 ws.onmessage = function(event) {
