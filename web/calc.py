@@ -2,7 +2,7 @@ import math
 
 
 #queue for timestamps, also a dictionary with MAC addresses
-time_dict = {}
+#time_dict = {}
 #holds device MAC addresses, dictionary of timestamps, and signal strengths 
 dict_storage = {}
 #holds MAC addresses, timestamps, and final (x,y) coordinates; dict_coord[mac][n] where n = 0(timestamp), 1(x coord), 2(y coord)
@@ -72,49 +72,64 @@ def position_routers(router_distances):
     global router3 
     router3 = Router(firstToThird*math.cos(theta), firstToThird*math.sin(theta), third['mac'])
 
+    router_addresses[router1.mac] = 0
+    router_addresses[router2.mac] = 1
+    router_addresses[router3.mac] = 2
 
 
 
 
 
 
-def routerAddress(router_mac_addr) :
-	if (len(router_addresses.keys()) < 3) :
-		if (not router_addresses.has_key(router_mac_addr)) :
-			router_addresses[router_mac_addr] = len(router_addresses.keys())
+#def routerAddress(router_mac_addr) :
+#	if (len(router_addresses.keys()) < 3) :
+#		if (not router_addresses.has_key(router_mac_addr)) :
+#			router_addresses[router_mac_addr] = len(router_addresses.keys())
 	
 
 def checkForUpdates(mac_addr, timestamp, signal, router_addr):
 	if (not dict_storage.has_key(mac_addr)):
 		dict_storage[mac_addr] = {timestamp: [0, 0, 0]}	
-		dict_coordinates[mac_addr] = [timestamp, 0, 0]
-		time_dict[mac_addr] = [timestamp]
+		#time_dict[mac_addr] = [timestamp]
 	if (not dict_storage[mac_addr].has_key(timestamp)) :
 		dict_storage[mac_addr][timestamp] = [0, 0, 0]
-		time_dict[mac_addr].append(timestamp)
+		#time_dict[mac_addr].append(timestamp)
 	dict_storage[mac_addr][timestamp][router_addresses[router_addr]] = signal
-	for x in dict_storage[mac_addr][timestamp]:
-		if x == 0 :
-			return None
-	if int(timestamp) > int(dict_coordinates[mac_addr][0]) :
-		dict_coordinates[mac_addr][0] = timestamp
-		dict_coordinates[mac_addr][1] = trilateration_x(dict_storage[mac_addr][timestamp][0], dict_storage[mac_addr][timestamp][1])
-		dict_coordinates[mac_addr][2] = trilateration_y(dict_storage[mac_addr][timestamp][0], dict_storage[mac_addr][timestamp][2], dict_coordinates[mac_addr][1])
-		time_dict[mac_addr].sort(key = float) 
-		while (1) :
-			if (time_dict[mac_addr][0] < timestamp) :
-				a = str (time_dict[mac_addr][0])
-				del time_dict[mac_addr][0]
-				del dict_storage[mac_addr][a]
-			else :
-				break	
+	
+	if dict_storage[mac_addr][timestamp][0] != 0 and dict_storage[mac_addr][timestamp][1] != 0 and dict_storage[mac_addr][timestamp][2] != 0:
+		output = dict_storage[mac_addr][timestamp]
+		temp = sorted(dict_storage[mac_addr].keys(), key = lambda x: int(x))
+		for i in range(len(temp)):
+			if(int(temp[i]) < int(timestamp)):
+				del dict_storage[temp[i]]
+			else:
+				break
 		del dict_storage[mac_addr][timestamp]
-		return (dict_coordinates[mac_addr][1], dict_coordinates[mac_addr][2], mac_addr) #returns (x, y, MAC addr) as tuple
-	else: 
-		print "delete node"
-		print dict_storage[mac_addr][timestamp]
-		del dict_storage[mac_addr][timestamp]
+		return (trilateration_x(dict_storage[mac_addr][timestamp][0], dict_storage[mac_addr][timestamp][1]),
+			trilateration_y(dict_storage[mac_addr][timestamp][0], dict_storage[mac_addr][timestamp][2], dict_coordinates[mac_addr][1]),
+			mac_addr)
+	else:
 		return None
+	#if int(timestamp) > int(dict_coordinates[mac_addr][0]) :
+	#	dict_coordinates[mac_addr][0] = timestamp
+	#	dict_coordinates[mac_addr][1] = trilateration_x(dict_storage[mac_addr][timestamp][0], dict_storage[mac_addr][timestamp][1])
+	#	dict_coordinates[mac_addr][2] = trilateration_y(dict_storage[mac_addr][timestamp][0], dict_storage[mac_addr][timestamp][2], dict_coordinates[mac_addr][1])
+	#	temp = sorted(dict_storage[mac_addr].keys(), key = lambda x: int(x))
+		#time_dict[mac_addr].sort(key = float) 
+	#	while (1) :
+	#		if (dict_storage[mac_addr][0] < timestamp) :
+	#			#a = str (time_dict[mac_addr][0])
+	#			#del time_dict[mac_addr][0]
+	#			del dict_storage[mac_addr][0]
+	#		else :
+	#			break	
+	#	del dict_storage[mac_addr][timestamp]
+	#	return (dict_coordinates[mac_addr][1], dict_coordinates[mac_addr][2], mac_addr) #returns (x, y, MAC addr) as tuple
+	#else: 
+	#	print "delete node"
+	#	print dict_storage[mac_addr][timestamp]
+	#	del dict_storage[mac_addr][timestamp]
+	#	return None
 
 
 def trilateration_x(s1, s2) :
@@ -141,9 +156,9 @@ if __name__ == "__main__":
     print str(router1)
     print str(router2)
     print str(router3)
-    routerAddress("1")
-    routerAddress("2")
-    routerAddress("3")
+    #routerAddress("1")
+    #routerAddress("2")
+    #routerAddress("3")
     print checkForUpdates("50", "121221230", -15, "1")
     print dict_storage
     print time_dict
