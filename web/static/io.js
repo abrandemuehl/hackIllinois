@@ -94,6 +94,7 @@ var ws = new WebSocket('ws://' + window.location.hostname + '/data/ws');
 
 
 ws.onmessage = function(event) {
+    console.log(event.data);
     var data = JSON.parse(event.data);
     if(data.type == "routers") {
         setRouters(data.values[0], data.values[1], data.values[2])
