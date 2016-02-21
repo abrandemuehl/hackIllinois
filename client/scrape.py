@@ -17,6 +17,9 @@ URL_ROUTER=URL+"/data/router"
 URL_DEVICE=URL+"/data/device"
 
 def PacketHandler(pkt):
+    global ROUTERS
+    global HANDSHAKE_DONE
+    global ROUTER_DATA
     if pkt.haslayer(Dot11):
         # if pkt.type==PROBE_REQUEST_TYPE and pkt.subtype == PROBE_REQUEST_SUBTYPE and ( pkt.addr2.lower() in WHITELIST or pkt.addr2.upper() in WHITELIST):
         # if pkt.addr2.lower() in WHITELIST or pkt.addr2.upper() in WHITELIST or pkt.addr1.lower() in WHITELIST or pkt.addr1.lower() in WHITELIST:
@@ -41,6 +44,7 @@ def SigStrength(pkt):
     return signal_strength
 
 def RouterPacket(pkt):
+    global ROUTER_DATA
     signal_strength = SigStrength(pkt)
     ROUTER_DATA[pkt.addr2]=signal_strength
 
@@ -57,10 +61,14 @@ def PrintPacket(pkt):
     # print "Target: %s Source: %s SSID: %s RSSi: %d"%(pkt.addr3,pkt.addr2,pkt.getlayer(Dot11ProbeReq).info,signal_strength)
 
 def handshake():
+    global ROUTERS
+    global HANDSHAKE_DONE
+    global ROUTER_DATA
     mac = hex(get_mac())
     payload={'mac':mac}
     r = requests.post(URL_HANDSHAKE,data=payload)
     while(1):
+        time.sleep(0.5)
         r = requests.get(URL_HANDSHAKE)
         data=r.json()
         if(len(data)==3):
