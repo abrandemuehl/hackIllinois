@@ -94,7 +94,7 @@ var ws = new WebSocket('ws://' + window.location.hostname + '/data/ws');
 
 
 ws.onmessage = function(event) {
-    var data = JSON.parse(e.data);
+    var data = JSON.parse(event.data);
     setThing(data.mac, data);
 }
 

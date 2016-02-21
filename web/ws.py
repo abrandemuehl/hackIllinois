@@ -31,7 +31,7 @@ class DataHandler(tornado.web.RequestHandler):
 
 
 application = tornado.web.Application([
-    (r'/ws', WSHandler),
+    (r'/data/ws', WSHandler),
     (r'/data', DataHandler),
 ])
 
