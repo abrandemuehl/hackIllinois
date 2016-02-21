@@ -70,6 +70,7 @@ class ResetHandler(tornado.web.RequestHandler):
     def get(self):
         router_distances = []
         router_macs = []
+        self.write("Reset!")
 
 
 
