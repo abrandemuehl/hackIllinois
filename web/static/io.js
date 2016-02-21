@@ -88,3 +88,14 @@ function setMove(){
 function distance(x1,y1,x2,y2){
   return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
 }
+
+
+var ws = new WebSocket('ws://' + window.location.hostname + '/data/ws');
+
+
+ws.onmessage = function(event) {
+    var data = JSON.parse(event.data);
+    setThing(data.mac, data);
+}
+
+

@@ -7,7 +7,6 @@ dict_coordinates = []
 router_addresses = {}
 
 def routerAddress(router_mac_addr) :
-
 	i = 0
 	while (len(router_addresses.keys()) < 4 and (i < 3)) :
 		if (not router_addresses.has_key(router_mac_addr)) :
@@ -16,8 +15,6 @@ def routerAddress(router_mac_addr) :
 	
 
 def checkForUpdates(mac_addr, timestamp, signal, router_addr):
-
-
 	if (not dict_storage.has_key(mac_addr)):
 		dict_storage[mac_addr] = {timestamp: {0, 0, 0}}	
 		dict_coordinates.append(mac_addr)
@@ -41,7 +38,7 @@ def checkForUpdates(mac_addr, timestamp, signal, router_addr):
 
 def sig_strengthToDistance(signal_strength) :
 
-	distance = (27.55 - 20*(math.log10(2437) + math.fabs(signal_strength)) / 20
+	distance = (27.55 - 20*(math.log10(2437) + math.fabs(signal_strength)) / 20)
 	distance = math.pow(10.0, distance)
 	return distance
 
