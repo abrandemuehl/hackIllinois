@@ -11,7 +11,6 @@ from calc import checkForUpdates
 class WSHandler(tornado.websocket.WebSocketHandler):
     connections = set()
     def open(self):
-        self.write_message("Ack")
         self.connections.add(self)
 
     def on_close(self):
