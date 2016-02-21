@@ -1,6 +1,7 @@
 import tornado.httpserver
 import tornado.websocket
-import tornado.ioloop import tornado.web
+import tornado.ioloop 
+import tornado.web
 import json
 
 from calc import checkForUpdates, position_routers, router1, router2, router3
