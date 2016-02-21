@@ -14,7 +14,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
     connections = set()
     def open(self):
         self.connections.add(self)
-        self.write_message(json.dumps(router))
 
     def on_close(self):
         self.connections.remove(self)
