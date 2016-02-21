@@ -63,6 +63,7 @@ class RouterHandshakeHandler(tornado.web.RequestHandler):
             if not router in router_macs:
                 router_macs.append(router)
     def get(self):
+        self.content_type = 'application/json'
         self.write(json.dumps(router_macs))
 
 
