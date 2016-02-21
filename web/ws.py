@@ -1,7 +1,6 @@
 import tornado.httpserver
 import tornado.websocket
-import tornado.ioloop
-import tornado.web
+import tornado.ioloop import tornado.web
 import json
 
 from calc import checkForUpdates, position_routers, router1, router2, router3
@@ -66,6 +65,11 @@ class RouterHandshakeHandler(tornado.web.RequestHandler):
         self.write(json.dumps(router_macs))
 
 
+class ResetHandler(tornado.web.RequestHandler):
+    def get(self):
+        router_distances = []
+        router_macs = []
+
 
 
 application = tornado.web.Application([
@@ -73,7 +77,7 @@ application = tornado.web.Application([
     (r'/data/device', DeviceHandler),
     (r'/data/router', RouterHandler),
     (r'/data/handshake', RouterHandshakeHandler),
-    # (r'/data/reset', ResetHandler)
+    (r'/data/reset', ResetHandler)
 ])
 
 if __name__ == "__main__":
