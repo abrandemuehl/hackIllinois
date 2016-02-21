@@ -7,16 +7,15 @@ dict_coordinates = []
 router_addresses = {}
 
 def routerAddress(router_mac_addr) :
-
 	i = 0
-	while (len(router_addresses.keys()) < 4 and(i < 3)) :
+	while (len(router_addresses.keys()) < 4 and (i < 3)) :
 		if (not router_addresses.has_key(router_mac_addr)) :
 			router_addresses[router_mac_addr] = i
 			i += 1
 	
 
 def checkForUpdates(mac_addr, timestamp, signal, router_addr):
-	if (!dict_storage.has_key(mac_addr)):
+	if (not dict_storage.has_key(mac_addr)):
 		dict_storage[mac_addr] = {timestamp: {0, 0, 0}}	
 		dict_coordinates.append(mac_addr)
 		dict_coordinates[mac_addr] = {}
