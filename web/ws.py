@@ -69,6 +69,8 @@ class RouterHandshakeHandler(tornado.web.RequestHandler):
 
 class ResetHandler(tornado.web.RequestHandler):
     def get(self):
+        global router_distances
+        global router_macs
         router_distances = []
         router_macs = []
         self.write("Reset!")
