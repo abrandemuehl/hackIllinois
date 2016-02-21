@@ -38,7 +38,7 @@ def checkForUpdates(mac_addr, timestamp, signal, router_addr):
 
 def sig_strengthToDistance(signal_strength) :
 
-	distance = (27.55 - 20*(math.log10(2437) + math.fabs(signal_strength)) / 20
+	distance = (27.55 - 20*(math.log10(2437) + math.fabs(signal_strength)) / 20)
 	distance = math.pow(10.0, distance)
 	return distance
 
