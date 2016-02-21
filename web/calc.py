@@ -16,21 +16,11 @@ def routerAddress(router_mac_addr) :
 	
 
 def checkForUpdates(mac_addr, timestamp, signal, router_addr):
-
-
-<<<<<<< HEAD
 	if (not dict_storage.has_key(mac_addr)):
 		dict_storage[mac_addr] = {timestamp: {0, 0, 0}}	
 		dict_coordinates.append(mac_addr)
 		dict_coordinates[mac_addr] = {}
 	if (not dict_storage[mac_addr].has_key[timestamp]) :
-=======
-	if (!dict_storage.has_key(mac_addr)):
-		dict_storage[mac_addr] = {timestamp: {0, 0, 0}}	
-		dict_coordinates.append(mac_addr)
-		dict_coordinates[mac_addr] = {}
-	if (!dict_storage[mac_addr].has_key[timestamp]) :
->>>>>>> Merged
 		dict_storage[mac_addr][timestamp] = {0, 0, 0}
 	dict_storage[mac_addr][timestamp][router_addresses[router_addr]] = signal
 	for x in dict_storage[mac_addr][timestamp]:

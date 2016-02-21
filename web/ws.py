@@ -4,6 +4,8 @@ import tornado.ioloop
 import tornado.web
 import json
 
+from calc import checkForUpdates
+
 
 
 class WSHandler(tornado.websocket.WebSocketHandler):
@@ -23,13 +25,14 @@ class DataHandler(tornado.web.RequestHandler):
         router = self.get_argument('router')
         res = checkForUpdates(mac, timestamp, signal_strength, router_mac)
         if res:
+            x, y, mac = res
             for socket in WSHandler.connections:
-                socket.write_message(json.dumps({"mac":mac, "timestamp": timestamp, "signal":signal, "router": router}))
+                socket.write_message(json.dumps({"x": x, "y": y, "mac": mac}))
 
 
 application = tornado.web.Application([
     (r'/ws', WSHandler),
-    (r"/data", DataHandler),
+    (r'/data', DataHandler),
 ])
 
 if __name__ == "__main__":
